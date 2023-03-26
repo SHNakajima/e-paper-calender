@@ -1,0 +1,24 @@
+{
+  "name": "node_cl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass template/sass/ --output dist/css/ --output-style compressed --watch --source-map true",
+    "cl": "node-sass template/sass/ --output dist/css/ --output-style compressed --source-map true && node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jimp": "^0.22.7",
+    "puppeteer": "^19.7.5",
+    "sharp": "^0.31.3",
+    "thymeleaf": "^0.21.0"
+  },
+  "devDependencies": {
+    "node-sass": "^8.0.0"
+  }
+}
