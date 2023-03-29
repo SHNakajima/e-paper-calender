@@ -69,22 +69,30 @@ async function authorize() {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-async function listEvents(auth) {
+async function listEvents(auth, start, end) {
   const calendar = google.calendar({version: 'v3', auth});
 
-  const calendars = await (await calendar.calendarList.list()).data;
-  const calendarColors = await (await calendar.colors.get()).data;
-  console.log(calendarColors);
+  const calendars = (await calendar.calendarList.list()).data;
+  const calendarColors = (await calendar.colors.get()).data;
+  // console.log(calendarColors);
 
   const displayCalendars = ["共有"];
 
-  calendars.items.forEach(cl => {
-    if ( displayCalendars.includes(cl.summary) ) {
-      console.log(cl);
-      getEventsList(cl, calendar);
+  let eventList = [];
+
+  for (const cl of calendars.items) {
+    if (displayCalendars.includes(cl.summary)) {
+      const tmpEventList = await getEventsList(cl, calendar, start, end);
+      eventList.push(...tmpEventList);
     }
+  }
+
+  eventList.map((event, i) => {
+    return mapEvent(event);
   });
 
+  // console.log(eventList);
+  return eventList;
   // const res = await calendar.events.list({
   //   calendarId: 'primary',
   //   timeMin: new Date().toISOString(),
@@ -104,15 +112,15 @@ async function listEvents(auth) {
   // });
 }
 
-async function getEventsList(calendar, gclObj) {
+async function getEventsList(calendar, gclObj, start, end) {
   const res = await gclObj.events.list({
     calendarId: calendar.id,
     timeMin: new Date().toISOString(),
     maxResults: 30,
     singleEvents: true,
     orderBy: 'startTime',
-    timeMin: getCurMonthRange('start'),
-    timeMax: getCurMonthRange('end')
+    timeMin: start,
+    timeMax: addDays(end, 1)
   });
   const events = res.data.items;
   if (!events || events.length === 0) {
@@ -120,15 +128,21 @@ async function getEventsList(calendar, gclObj) {
     return;
   }
   console.log('Upcoming 30 events:');
-  events.map((event, i) => {
-    mapEvent(event);
-  });
-  console.log(events);
+  // console.log(events);
+  return events;
+}
+
+function addDays(date, days) {
+  let resDate = new Date(date);
+  resDate.setDate(resDate.getDate() + parseInt(days));
+  return resDate;
 }
 
 function mapEvent(event) {
   const startDay = (event.start.dateTime || event.start.date).substring(0,10);
   event.startDay = startDay;
+
+  event.dotText = "●";
 
   return event;
 }
@@ -136,18 +150,18 @@ function mapEvent(event) {
 function getCurMonthRange(target) {
   var date = new Date();
   if (target == 'start') {
-    return new Date(date.getFullYear(), date.getMonth(), -7);
+    return new Date(date.getFullYear(), date.getMonth(), -15);
   } else {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 9);
+    return new Date(date.getFullYear(), date.getMonth() + 1, 15);
   }
 }
 
 // authorize().then(listEvents).catch(console.error);
 
-exports.getEvents =  async function() {
+exports.getEvents =  async function(start, end) {
   try {
     const auth = await authorize();
-    return await listEvents(auth);
+    return await listEvents(auth, start, end);
   } catch (message) {
     return console.error(message);
   }

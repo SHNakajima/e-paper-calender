@@ -16,6 +16,7 @@ exports.convHtml2Img = async function(inputHtmlPath, outputImagePath) {
   const page = await browser.newPage();
   console.log(`src URL: file://${inputHtmlPath}`);
   await page.goto(`file://${inputHtmlPath}`);
+  await page.waitForTimeout(3000);
 
   // ページコンテキスト内でスクリーンショット対象の要素を取得
   // 注: 出力画像のサイズを要素と一致させるために必要

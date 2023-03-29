@@ -1,29 +1,141 @@
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
+
+$ep-color-black: #000000;
+$ep-color-white: #ffffff;
+$ep-color-green: #008000;
+$ep-color-blue:  #0000FF;
+$ep-color-red:   #FF0000;
+$ep-color-yellow:#FFFF00;
+$ep-color-orange:#FFAA00;
+
+$fontsize-main: 20px;
+
+$ep-colors: (
+  black:  $ep-color-black,
+  white:  $ep-color-white,
+  green:  $ep-color-green,
+  blue:   $ep-color-blue,
+  red:    $ep-color-red,
+  yellow: $ep-color-yellow,
+  orange: $ep-color-orange
+);
+
+@each $color, $hex in $ep-colors {
+  .bg-color-#{$color} {
+    background: $hex;
+  }
+  .text-color-#{$color} {
+    background: $hex;
+  }
+}
 
 body{
   background:#fad390;
-  font-family: 'Questrial', sans-serif;
+  font-family: 'Kiwi Maru', sans-serif;
+  font-size: $fontsize-main;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
-.calendar{
+
+.cl{
+  
+  // display:inline-grid;
+  // justify-content:center;
+  align-items:center;
+  padding:20px;
+  border-radius:5px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  // box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3);
+
+  &-fullwidth {
+    width: 600px;
+  }
+
   &-wrapper{
-    aspect-ratio: 600/448;
-    background: #fff;
     height: 448px;
+    width: 600px;
+    aspect-ratio: 600/448;
+    background: $ep-color-white;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  display:inline-grid;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  border-radius:5px;
-  // box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3);
+
+  &-title {
+    margin-left: 12px;
+    // font-weight: bolder;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
   
+  &-head {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 8px;
+    border-bottom: solid $ep-color-black 1px;
+
+    .weekday{
+      &:first-child {
+        color: $ep-color-red;
+      }
+      &:last-child {
+        color: $ep-color-green;
+      }
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 600px; */
+    justify-content: space-around;
+  }
+
+  .day {
+    &-wrapper {
+      width: 11%;
+      padding: 8px;
+      height: 156px;
+    }
+    &-box {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-head {
+        text-align: center;
+        &.today {
+          background: red;
+          color: white;
+          border-radius: 50%;
+          aspect-ratio: 1/1;
+          width: 55%;
+        }
+      }
+      &-body {
+        font-size: 12px;
+      }
+      &-item {
+        &-dot {
+          &.color- {
+            color: $ep-color-blue;
+          }
+          &.color-5 {
+            color: $ep-color-orange;
+          }
+        }
+        margin-bottom: 8px;
+      }
+    }
+  }
+
   .month{
     display:flex;
     justify-content:space-between;

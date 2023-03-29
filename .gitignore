@@ -107,3 +107,6 @@ out/*
 
 credentials.*
 token.json
+*.zip
+
+mock/
