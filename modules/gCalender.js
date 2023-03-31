@@ -76,13 +76,14 @@ async function listEvents(auth, start, end) {
   const calendarColors = (await calendar.colors.get()).data;
   // console.log(calendarColors);
 
-  const displayCalendars = ["共有"];
+  const displayCalendars = ["共有", "日本の祝日"];
 
   let eventList = [];
 
   for (const cl of calendars.items) {
     if (displayCalendars.includes(cl.summary)) {
       const tmpEventList = await getEventsList(cl, calendar, start, end);
+      // console.log(tmpEventList);
       eventList.push(...tmpEventList);
     }
   }
@@ -125,7 +126,7 @@ async function getEventsList(calendar, gclObj, start, end) {
   const events = res.data.items;
   if (!events || events.length === 0) {
     console.log('No upcoming events found.');
-    return;
+    return [];
   }
   console.log('Upcoming 30 events:');
   // console.log(events);

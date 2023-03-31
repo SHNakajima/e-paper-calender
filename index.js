@@ -1,6 +1,6 @@
 const html2img = require("./modules/html2img");
 const gCalender = require("./modules/gCalender");
-const mockCalenderData = require("./mock/clData");
+// const mockCalenderData = require("./mock/clData");
 const thymeleaf = require("thymeleaf");
 const fs = require("fs");
 const path = require('path');
@@ -34,7 +34,8 @@ async function main() {
 async function generateHtml() {
   
   const tmpDate = new Date();
-  const title = `${tmpDate.getFullYear} - ${tmpDate.getMonth}`
+
+  const title = `${tmpDate.getFullYear()} - ${tmpDate.getMonth()+1}`
   
   const days = getCalendarDays("2week");
   const yobiArr = ['日','月','火','水','木','金','土'];
@@ -46,7 +47,7 @@ async function generateHtml() {
   // console.log(events);
   // console.log(days);
   const clData = generateClData(days, events);
-  console.log(clData);
+  // console.log(clData);
 
   let tmpEngine = new thymeleaf.TemplateEngine();
   const result = await tmpEngine.processFile(tempHtmlPath, { title: title, yobi: yobiArr, clData: clData});
@@ -64,10 +65,19 @@ async function convImg() {
 }
 
 async function png2bmpConvert(pngPath, bmpPath) {
-  const img = await jimp.read(pngPath).catch(err => console.error(err));;
-  console.log("png loaded. converting...");
-  await img.write(bmpPath);
-  console.log("converted!");
+  // const img = await jimp.read(pngPath).catch(err => console.error(err));;
+  // console.log("png loaded. converting...");
+  // await img.write(bmpPath);
+  // console.log("converted!");
+  await jimp.read(pngPath).then(async img => {
+    console.log("png loaded. converting...");
+    img.write(bmpPath);
+
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    console.log("converted! to:" + bmpPath);
+
+  }).catch(err => console.error(err));
 }
 
 async function testServe() {

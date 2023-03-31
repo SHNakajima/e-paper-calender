@@ -100,8 +100,8 @@ body{
 
   .day {
     &-wrapper {
-      width: 11%;
-      padding: 8px;
+      width: 12%;
+      padding: 8px 4px;
       height: 156px;
     }
     &-box {
@@ -111,18 +111,25 @@ body{
       align-items: center;
       &-head {
         text-align: center;
+        height: 35px;
         &.today {
           background: red;
           color: white;
           border-radius: 50%;
           aspect-ratio: 1/1;
-          width: 55%;
+          width: 52%;
         }
       }
       &-body {
         font-size: 12px;
       }
       &-item {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        margin-bottom: 8px;
+
         &-dot {
           &.color- {
             color: $ep-color-blue;
@@ -131,7 +138,9 @@ body{
             color: $ep-color-orange;
           }
         }
-        margin-bottom: 8px;
+        &-text {
+          word-break: break-all;
+        }
       }
     }
   }
