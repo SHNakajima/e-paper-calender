@@ -110,3 +110,5 @@ token.json
 *.zip
 
 mock/
+client_secret.json
+modules/const.js

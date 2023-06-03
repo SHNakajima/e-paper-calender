@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap');
+
+$ep-color-black: #000000;
+$ep-color-white: #ffffff;
+$ep-color-green: #008000;
+$ep-color-blue:  #0000FF;
+$ep-color-red:   #FF0000;
+$ep-color-yellow:#FFFF00;
+$ep-color-orange:#FFAA00;
+
+$fontsize-main: 32px;
+
+$ep-colors: (
+  black:  $ep-color-black,
+  white:  $ep-color-white,
+  green:  $ep-color-green,
+  blue:   $ep-color-blue,
+  red:    $ep-color-red,
+  yellow: $ep-color-yellow,
+  orange: $ep-color-orange
+);
+
+@each $color, $hex in $ep-colors {
+  .bg-color-#{$color} {
+    background: $hex;
+  }
+  .text-color-#{$color} {
+    background: $hex;
+  }
+}
+
+body{
+  background:$ep-color-black;
+  font-family: 'Kiwi Maru', sans-serif;
+  font-size: $fontsize-main;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.cl{
+  
+  // display:inline-grid;
+  // justify-content:center;
+  align-items:center;
+  padding:20px;
+  border-radius:5px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
+  // box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3);
+
+  &-fullwidth {
+    width: 600px;
+  }
+
+  &-wrapper{
+    height: 500px;
+    width: 800px;
+    aspect-ratio: 600/448;
+    font-weight: bolder;
+    background: $ep-color-black;
+    color: $ep-color-white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding-top: 300px;
+  }
+
+  &-title {
+    margin-left: 12px;
+    font-size: 40px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  &-head {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 8px;
+    border-bottom: solid $ep-color-black 1px;
+
+    .weekday{
+      &:first-child {
+        color: $ep-color-red;
+      }
+      &:last-child {
+        color: $ep-color-green;
+      }
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 600px; */
+    justify-content: space-around;
+  }
+
+  .day {
+    &-wrapper {
+      width: 12%;
+      padding: 8px 4px;
+      height: 156px;
+    }
+    &-box {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-head {
+        text-align: center;
+        height: 52px;
+        &.today {
+          background: red;
+          color: white;
+          border-radius: 50%;
+          aspect-ratio: 1/1;
+          width: 60%;
+        }
+      }
+      &-body {
+        font-size: 16px;
+      }
+      &-item {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        margin-bottom: 8px;
+
+        &-dot {
+          &.color- {
+            color: $ep-color-blue;
+          }
+          &.color-5 {
+            color: $ep-color-orange;
+          }
+        }
+        &-text {
+          word-break: break-all;
+        }
+      }
+    }
+  }
+
+  .month{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:20px;
+    margin-bottom:20px;
+    font-weight:300;
+    
+    .year{
+      font-weight:600;
+      margin-left:10px;
+    }
+    
+    .nav{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-decoration:none;
+      color:#0a3d62;
+      width:40px;
+      height:40px;
+      border-radius:40px;
+      transition-duration:.2s;
+      position:relative;
+      
+      &:hover{
+        background:#eee;
+      }
+    }
+  }
+  
+  .days{
+    display: grid;
+    justify-content:center;
+    align-items:center;
+    grid-template-columns: repeat(7, 1fr);
+    color:#999;
+    font-weight:600;
+    margin-bottom:15px;
+    
+    span{
+      width:50px;
+      justify-self:center;
+      align-self:center;
+      text-align:center;
+    }
+  }
+  
+  .dates{
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    
+    button{
+      cursor:pointer;
+      outline:0;
+      border:0;
+      background:transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size:16px;
+      justify-self:center;
+      align-self:center;
+      width:50px;
+      height:50px;
+      border-radius:50px;
+      margin:2px;
+      transition-duration:.2s;
+      
+      &.today{
+        box-shadow:inset 0px 0px 0px 2px #0a3d62;
+      }
+      
+      &:first-child{
+        grid-column:3;
+      }
+      
+      &:hover{
+        background:#eee;
+      }
+      
+      &:focus{
+        background:#0a3d62;
+        color:#fff;
+        font-weight:600;
+      }
+    }
+  }
+}
